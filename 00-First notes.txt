@@ -1,0 +1,28 @@
+React.js  is an indepedent library from the browser platform and mobile platform.
+React.js is platform agnostic. It's a library that offfer us state tools and syntax for constructing a virtual representation tree in components with all that we need to create aplications. But it is
+the React DOM library who translates into the Browser what we create with React.js..So, in reality,  React.is doesn't care about the underlinng platform.
+React Native is like React DOM. Which give us special components and tools that underhood compile to native code.
+
+React native is like React dom..but it target the mobile platform.
+
+-------------------------------------------------------
+
+How react Native works?
+
+The library comes with pre-built component such the <View></View>, and <Text></Text> and many more, that will be compiled to their native equivalent in the android and ios platoforms. Just the code for the view itself, for what the eye can see in the screen. But the logic part, such the if statements, the functions, the state management, etc. all of that is not compiled. Our js code will be run as js code in a js thread inside the compile native app, and then, that js code will be allowed to comunicate with the underlined compiled app and mobile resorces such as the camera through a 'bridge'.(This worries me a little, for performace matters.)
+-----------------------------------------------------------
+
+We have two alternatives to intall React Native: Expo CLI and the React Native CLI.Both options will give you a development environment in which you'll be able to development your mobile apps.
+
+Some of the differences:
+Expo CLI:
+Third party service(The most important feature are free but the company behind it also offers paid features)
+It is easier to use than the React native CLI, and it is the recomended method to sstart with. The development has less friction.
+We also have the change to swith to the React Native CLI any time wa want if we decided so.
+
+React Native CLI:
+The setup is a little longer. It is the tool provided by the React Native team and comunitiy.
+It give you a bare-bone development(You need to set up way more things)
+Less convenient features.
+It has easier integration with native source code(e.g. kotlin and objective c), although the whole pupose of tools like React native is that you find yourself in the need for doing this too often. So is a 'appearent' benefit.
+
