@@ -21,7 +21,7 @@ function StartGameScreen({onPickedNumber}){
     function confirmInputHandler(){
        const chosenNumber = parseInt(enteredNumber);
        if(isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99){
-           //to trigger alerts we rely on this Built-in object that allows to call several methods. One of them is the .alert(). This will print the native alert in each OS, so expect to have different styles on the alerts in each OS. By default, the buttons will dismiss the alert when clicked.
+           //to trigger alerts we rely on this Built-in object that allows to call several methods. One of them is the .alert(). This will display the native alert in each OS, so expect to have different styles on the alerts in each OS. By default, the buttons will dismiss the alert when clicked.
            Alert.alert('Invalid number!','Number has to be a number between 1 and 99',
                //as third argument we pass configs for the buttons of this alert. The 'style' prop, applies predefined styles
                [{
@@ -40,7 +40,7 @@ function StartGameScreen({onPickedNumber}){
             <Card>
                 <InstructionText>Enter a Number</InstructionText>
 
-                {/*Turns out the TextInput like in Flutter, have all kind of props for every need we may need. Some of them are: maxLength, keyBoardType, autoCapitalize, autoCorrect. Apparently the 'type' of value it will have cannot be set. We can protect ourselves with the type of keyboard and maybe interviewing the pasted texts*/}
+                {/*Turns out the built-in 'TextInput' component like in Flutter, has all kind of props for every need we may need. Some of them are: maxLength, keyBoardType, autoCapitalize, autoCorrect. Apparently the 'type' of value it will have cannot be set. We can protect ourselves with the type of keyboard and maybe interviewing the pasted texts*/}
                 <TextInput style={styles.numberInput} maxLength={2} keyboardType='number-pad' autoCapitalize='none' autoCorrect={false} value={enteredNumber} onChangeText={numberInputHandler}/>
                 <View style={styles.buttonsContainer}>
                     <View style={styles.buttonContainer}>

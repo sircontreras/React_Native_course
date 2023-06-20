@@ -81,15 +81,15 @@ function GameScreen({userNumber, onGameOver}){
                 </View>
 
             </Card>
-            {/*The very nature of FlatList is to have an unlimited height. So have to wrap it with some container that dictates how much space will have available. Otherwise, the FlatList will not scroll properly in both OS.*/}
+            {/*The very nature of FlatList is to have an unlimited height. So we need to have it wrapped with some container that dictates how much space it will have available. Otherwise, the FlatList will not scroll properly in both OS.*/}
             <View style={styles.listContainer}>
-                {/*Something weird I noticed. This GameScreen is not the first one that appears when you open the app. I left a string text inside a View and any error was thrown. But it did when I navigated to this page. wait,whaat?. Does React Native only throws errors over the documents that are being rendered?. Terrible if the answers is yes. I need to investigate this further. */}
+                {/*Something weird I noticed. This GameScreen page component is not the first one that appears when you open the app. I left a string text inside a View and any error was thrown. But it did when I navigated to this page. wait,whaat?. Does React Native only throws errors over the documents that are being rendered?. Terrible if the answers is yes. I need to investigate this further. */}
 
-                {/*We do an old .map approach or...*/}
+                {/*We do an old .map() approach */}
                 {/*{guessRounds.map((guessRound)=>{*/}
                 {/*    return <Text key={guessRound}>{guessRound}</Text>*/}
                 {/*})}*/}
-                {/*We can use a FlatList*/}
+                {/*...or We can use a FlatList*/}
                 <FlatList data={guessRounds} renderItem={(itemData)=>{
                     return <GuessLogItem roundNumber={guessRounds.length - itemData.index} guess={itemData.item}/>;
                 }} keyExtractor={(item)=>item}/>

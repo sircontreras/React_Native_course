@@ -17,9 +17,9 @@ export default function App() {
     const [gameIsOver, setGameIsOver] = useState(false);
     const [guessRounds, setGuessRounds] = useState(0);
 
-    /*CUSTOM FONTS: In RN we add custom fonts to the project using a special additional expo package that we can install with: expo install expo-font. This package provides us with a special hook(useFonts), we need pass it its config inside an object. Check the docs to learn more about it: https://docs.expo.dev/versions/latest/sdk/font/ */
-    /*This hook returns an array whose first element contains a boolean that let us know if all the fonts has been loaded and ready to use.*/
-    /*So, to use these fonts in your application, you just need to any of yours styles definitions, just add the good font-family property with any of identifiers you passed to useHook, e.g: font-family: 'open-sans-bold'*/
+    /*CUSTOM FONTS: In RN we add custom fonts to the project using a special additional expo package that we can install with: expo install expo-font. This package provides us with a special hook(useFonts) that receives an object as parameter with its config. Check the docs to learn more about it: https://docs.expo.dev/versions/latest/sdk/font/ */
+    /*This hook returns an array whose first element contains a boolean that let us know if all the fonts has been loaded and are ready to use.*/
+    /*So, to use these fonts in your application, you just need add them in any of yours styles definitions, just add the good 'font-family' property with any identifier you passed to useFont hook, e.g: font-family: 'open-sans-bold'*/
     const [fontsLoaded] = useFonts({
         'open-sans' : require('./assets/fonts/OpenSans-Regular.ttf'),
         'open-sans-bold' : require('./assets/fonts/OpenSans-Bold.ttf')
@@ -27,16 +27,6 @@ export default function App() {
 
     function pickedNumberHandler(pickedNumber){
         setUserNumber(pickedNumber);
-    }
-
-    //At this point in the course, a primitive and programmatic way of doing navigation is implemented here. But later I was told a more official way of doing so with an external package will be taught. I guess is a React router type of thing.
-    let screen = <StartGameScreen onPickedNumber={pickedNumberHandler}/>
-
-    if(userNumber){
-        screen = <GameScreen userNumber={userNumber} onGameOver={gameOverHandler}/>;
-    }
-    if(gameIsOver) {
-        screen = <GameOverScreen userNumber={userNumber} roundsNumber={guessRounds} onStartNewGame={startNewGameHandler}/>
     }
 
     function gameOverHandler(numberOfRounds){
@@ -50,7 +40,19 @@ export default function App() {
         setGuessRounds(0);
     }
 
-    /*...Once our resource, such the custom load has loaded, we do something like this with a useEffect to authorize the leaving of the splash screen...*/
+
+    //At this point in the course, a primitive and programmatic way of doing navigation is implemented here. But later I was told a more official way of doing so with an external package will be taught. I guess is a React router type of thing.
+    let screen = <StartGameScreen onPickedNumber={pickedNumberHandler}/>
+
+    if(userNumber){
+        screen = <GameScreen userNumber={userNumber} onGameOver={gameOverHandler}/>;
+    }
+    if(gameIsOver) {
+        screen = <GameOverScreen userNumber={userNumber} roundsNumber={guessRounds} onStartNewGame={startNewGameHandler}/>
+    }
+
+
+    /*...Once our resources, such the custom fonts have loaded, we do something like this with a useEffect to authorize the splash screen leaving...*/
     useEffect(()=>{
 
         async function doSomething() {
@@ -66,7 +68,7 @@ export default function App() {
         }
     },[fontsLoaded]);
 
-    /*To accompanying the useHook approach we use this condition to not display content until those fonts are loaded. If I didn't put this condition here the console will complain about it. It like we cannot show content until fonts are loaded...Needs to investigate further.*/
+    /*To accompanying the useHook approach we use this condition to not display content until those fonts are loaded. If I didn't put this condition here the console will complain about it. It's like we cannot show content until fonts are loaded...Needs to investigate further.*/
     if(!fontsLoaded){
         return null;
     }
@@ -77,10 +79,10 @@ export default function App() {
     <>
 
         <LinearGradient style={styles.rootScreen} colors={[Colors.primary700, Colors.accent500]}>
-            {/*But to deal with background images, we have another special built-in component, ImageBackground. the 'resizeMode' is the same as the backgroundSize from web. Keep in mind that built-in components are component composed of other built-in components. ImageBackground can receive two types of styles: 'styles' that will be applied to its outermost internal View component, and the imageStyle which will be applied to its internal Image component*/}
+            {/*But for dealing with background images, we have another special built-in component, ImageBackground. the 'resizeMode' is the same as the backgroundSize from web. Keep in mind that built-in components are component composed of other built-in components. ImageBackground can receive two types of styles: 'styles' that will be applied to its outermost internal View component, and the imageStyle which will be applied to its internal Image component*/}
             <ImageBackground source={require('./assets/images/background.png')} resizeMode='cover' style={styles.rootScreen} imageStyle={styles.backgroundImage}>
                 {/*IOS 11+ ONLY(WTF? what about android?): We have a special component that automatically applies padding to reflect the portion of the view that is covered by navigation bars, tab bars, toolbars, and other ancestor views. To work property it needs a property that applies height to it. In our case we are using the flex: 1 style property. This component is most commonly put in the topmost level of our app  to affect all pages. In this case right in here, in the App.js*/}
-                {/*One workaround to have the same effect on android is to also used the <StatusBar/> component. I asked Marcello about it, and he told me that nowadays people use this package: https://www.npmjs.com/package/react-native-safe-area-context which works on both OS greatly. It seems RN have deficiency in this regard*/}
+                {/*One workaround to have the same effect on android is to also used the <StatusBar/> component. I asked Marcello about it, and he told me that nowadays people use this package: https://www.npmjs.com/package/react-native-safe-area-context which works on both OSs greatly. It seems RN have deficiency in this regard*/}
                 <SafeAreaView style={styles.rootScreen}>
                     {screen}
                 </SafeAreaView>

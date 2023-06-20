@@ -25,7 +25,7 @@ export default PrimaryButton;
 
 const styles = StyleSheet.create({
     buttonOuterContainer : {
-        borderRadius: 28,//It does not crop by its self. We need overflow: hidden like the web for that.
+        borderRadius: 28,//It does not crop by itself. We need overflow: hidden like the web for that.
         overflow: 'hidden', //did not expect this property existed in React native
         margin: 4,
     },
