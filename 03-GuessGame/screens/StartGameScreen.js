@@ -48,7 +48,7 @@ function StartGameScreen({onPickedNumber}){
 
 
     return (
-        //In IOS, we have particular case with the keyboard, you cannot dismiss it by taping outside the keyboard and also in both OS the TextInput is covered by the keyboard. To address that we use a combination of the following two component from RN. ScrollView and KeyboardAvoidingView. KeyboardAvoidingView will avoid the keyboard covering the focus Text Input. But it needs a scrolling solution to move the scroll and cause the wanted effect. In an old phone such the nexus 5 the keyboard keeps covering the TextInput. But in a pixel 3 that doesn't happen.maybe this is related to not possible in old version of android.
+        //In IOS, we have particular case with the keyboard, you cannot dismiss it by taping outside the keyboard and also in both OS the TextInput is covered by the keyboard. To address that we use a combination of the following two component from RN. ScrollView and KeyboardAvoidingView. KeyboardAvoidingView will avoid the keyboard covering the focus Text Input. But it needs a scrolling solution to move the scroll and cause the wanted effect. In android the effect doesn't work..WTF!!. It works good in ios. 
        <ScrollView style={styles.screen}>
            <KeyboardAvoidingView style={styles.screen} behavior='position'>
                <View style={[styles.rootContainer, {marginTop: marginTopDistance}]}>{/*Style array merging*/}
