@@ -1,4 +1,13 @@
-import {TextInput, View, StyleSheet, Alert} from "react-native";
+import {
+    TextInput,
+    View,
+    StyleSheet,
+    Alert,
+    Dimensions,
+    useWindowDimensions,
+    KeyboardAvoidingView,
+    ScrollView
+} from "react-native";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import {useState} from "react";
 import Colors from "../constants/colors";
@@ -9,6 +18,10 @@ import InstructionText from "../components/ui/InstructionText";
 function StartGameScreen({onPickedNumber}){
 
     const [enteredNumber, setEnteredNumber] = useState('');
+
+    // The useWindowDimensions is the modern reactive alternative for the dimension API. This hook will update its extracted variables whenever the device orientation changes.
+    const {width, height} = useWindowDimensions();
+    const  marginTopDistance = height < 380 ? 30: 100; //...then we can do dynamic and reactive calculations.
 
     function numberInputHandler(enteredText){
         setEnteredNumber(enteredText);
@@ -33,32 +46,42 @@ function StartGameScreen({onPickedNumber}){
         onPickedNumber(chosenNumber);
     }
 
+
     return (
-        <View style={styles.rootContainer}>
+        //In IOS, we have particular case with the keyboard, you cannot dismiss it by taping outside the keyboard and also in both OS the TextInput is covered by the keyboard. To address that we use a combination of the following two component from RN. ScrollView and KeyboardAvoidingView. KeyboardAvoidingView will avoid the keyboard covering the focus Text Input. But it needs a scrolling solution to move the scroll and cause the wanted effect. In an old phone such the nexus 5 the keyboard keeps covering the TextInput. But in a pixel 3 that doesn't happen.maybe this is related to not possible in old version of android.
+       <ScrollView style={styles.screen}>
+           <KeyboardAvoidingView style={styles.screen} behavior='position'>
+               <View style={[styles.rootContainer, {marginTop: marginTopDistance}]}>{/*Style array merging*/}
 
-            <Title>Guess My number</Title>
-            <Card>
-                <InstructionText>Enter a Number</InstructionText>
+                   <Title>Guess My number</Title>
+                   <Card>
+                       <InstructionText>Enter a Number</InstructionText>
 
-                {/*Turns out the built-in 'TextInput' component like in Flutter, has all kind of props for every need we may need. Some of them are: maxLength, keyBoardType, autoCapitalize, autoCorrect. Apparently the 'type' of value it will have cannot be set. We can protect ourselves with the type of keyboard and maybe interviewing the pasted texts*/}
-                <TextInput style={styles.numberInput} maxLength={2} keyboardType='number-pad' autoCapitalize='none' autoCorrect={false} value={enteredNumber} onChangeText={numberInputHandler}/>
-                <View style={styles.buttonsContainer}>
-                    <View style={styles.buttonContainer}>
-                        <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
-                    </View>
-                    <View style={styles.buttonContainer}>
-                        <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
-                    </View>
-                </View>
-            </Card>
-        </View>
+                       {/*Turns out the built-in 'TextInput' component like in Flutter, has all kind of props for every need we may need. Some of them are: maxLength, keyBoardType, autoCapitalize, autoCorrect. Apparently the 'type' of value it will have cannot be set. We can protect ourselves with the type of keyboard and maybe interviewing the pasted texts*/}
+                       <TextInput style={styles.numberInput} maxLength={2} keyboardType='number-pad' autoCapitalize='none' autoCorrect={false} value={enteredNumber} onChangeText={numberInputHandler}/>
+                       <View style={styles.buttonsContainer}>
+                           <View style={styles.buttonContainer}>
+                               <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+                           </View>
+                           <View style={styles.buttonContainer}>
+                               <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+                           </View>
+                       </View>
+                   </Card>
+               </View>
+           </KeyboardAvoidingView>
+       </ScrollView>
     )
 }
 
+const deviceHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
+    screen : {
+      flex: 1
+    },
     rootContainer : {
       flex: 1,
-        marginTop:100,
         alignItems: 'center'
     },
     numberInput : {

@@ -1,4 +1,4 @@
-import {View, StyleSheet, Alert, FlatList} from "react-native";
+import {View, StyleSheet, Alert, FlatList, useWindowDimensions} from "react-native";
 import Title from "../components/ui/Title";
 import {useEffect, useState} from "react";
 import NumberContainer from "../components/game/NumberContainer";
@@ -16,6 +16,7 @@ function GameScreen({userNumber, onGameOver}){
     const initialGuess = generateRandomBetween(1, 100, userNumber);
     const [currentGuess, setCurrentGuess] = useState(initialGuess);
     const [guessRounds, setGuessRounds] = useState([initialGuess]);
+    const {width, height} = useWindowDimensions();
 
     function generateRandomBetween(min, max, exclude) {
         const rndNum = Math.floor(Math.random() * (max - min)) + min;
@@ -55,6 +56,8 @@ function GameScreen({userNumber, onGameOver}){
         minBoundary = 1;
         maxBoundary = 100;
     },[]);
+
+    
 
     return (
         <View style={styles.screen}>
@@ -103,6 +106,7 @@ const styles = StyleSheet.create({
     screen : {
         flex: 1,
         padding: 24,
+        alignItems:'center'
     },
     instructionText : {
         marginBottom : 12

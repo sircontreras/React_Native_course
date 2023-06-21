@@ -16,7 +16,10 @@ const styles = StyleSheet.create({
         textAlign:'center',
         borderWidth: 2,
         borderColor :'white',
-        padding: 12
+        padding: 12,
+        //Dynamics widths..meehh!!..I already knew that.
+        maxWidth:'80%',
+        width: 300
     }
 })
 
