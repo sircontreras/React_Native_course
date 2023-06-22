@@ -1,4 +1,4 @@
-import {ImageBackground, SafeAreaView, StyleSheet} from 'react-native';
+import {ImageBackground, SafeAreaView, StatusBar, StyleSheet} from 'react-native';
 import StartGameScreen from "./screens/StartGameScreen";
 import {LinearGradient} from "expo-linear-gradient";
 import {useEffect, useState} from "react";
@@ -8,6 +8,7 @@ import GameOverScreen from "./screens/GameOver";
 import {useFonts} from "expo-font";
 
 import * as SplashScreen from 'expo-splash-screen';
+import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
 
 // Keep the splash screen visible while we fetch resources. This is one of the official resources one can use to artificially keep the splash screen while we load something else that should be ready when a component such the app.js are loaded. We use the SplashScreen utility from the additional package from expo that we can install with: npx expo install expo-splash-screen...
 SplashScreen.preventAutoHideAsync();
@@ -77,7 +78,8 @@ export default function App() {
   return (
       //One method to apply gradients is using a component from an external Expo package for this purpose. You need to install it with: expo install expo-linear-gradient. This command will read the expo version you have and then install the gradient package compatible with it. We use the LinearGradient component that counts with a 'color' prop for the gradient colors. After that this component works and can be used like a View
     <>
-
+        {/*Used of StatusBar. It seems different than before .please investigate*/}
+        <ExpoStatusBar style='light' />
         <LinearGradient style={styles.rootScreen} colors={[Colors.primary700, Colors.accent500]}>
             {/*But for dealing with background images, we have another special built-in component, ImageBackground. the 'resizeMode' is the same as the backgroundSize from web. Keep in mind that built-in components are component composed of other built-in components. ImageBackground can receive two types of styles: 'styles' that will be applied to its outermost internal View component, and the imageStyle which will be applied to its internal Image component*/}
             <ImageBackground source={require('./assets/images/background.png')} resizeMode='cover' style={styles.rootScreen} imageStyle={styles.backgroundImage}>
