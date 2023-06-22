@@ -57,16 +57,40 @@ function GameScreen({userNumber, onGameOver}){
         maxBoundary = 100;
     },[]);
 
-    
+    //ADJUSTABLE UI PORTRAIT/LANDSCAPE
+    //From here we're preparing the UI to be conditionally rendered based on the device width, in an effort to detect when it is portrait or when it is landscape. This 'content' variable will hold the portrait version...
+    let content = (
+      <>
+          <NumberContainer>{userNumber}/{currentGuess}</NumberContainer>
+          <Card>
+              <InstructionText style={styles.instructionText}>Higher or lower?</InstructionText>
+              <View style={styles.buttonsContainer}>
+                  <View style={styles.buttonContainer}>
 
-    return (
-        <View style={styles.screen}>
-                <Title>Opponent's Guess</Title>
-            <NumberContainer>{userNumber}/{currentGuess}</NumberContainer>
+                      <PrimaryButton onPress={()=>nextGuessHandler('lower')}>
+                          {/*Icons: Expo comes with a package that contains several icon families that could speed up the iconography work in our app: read the docs to know all about them: https://docs.expo.dev/guides/icons/ and https://icons.expo.fyi/
+                        */}
+                          <Entypo name="minus" size={24} color="white" />
+                      </PrimaryButton>
+                  </View>
+                  <View style={styles.buttonContainer}>
+                      <PrimaryButton onPress={()=>nextGuessHandler('greater')}>
+                          <Entypo name="plus" size={24} color="white" />
+                      </PrimaryButton>
+                  </View>
 
-            <Card>
-                <InstructionText style={styles.instructionText}>Higher or lower?</InstructionText>
-                <View style={styles.buttonsContainer}>
+              </View>
+
+          </Card>
+      </>
+    );
+
+    //...Whereas this other block will display the landscape version. This seems to be a common patter to address to displayed adjusted JSX.
+    if(width > 500){
+        content = (
+            <>
+                {/*Notice that we can decide to display or not stuff.*/}
+                <View style={styles.buttonContainerWide}>
                     <View style={styles.buttonContainer}>
 
                         <PrimaryButton onPress={()=>nextGuessHandler('lower')}>
@@ -75,15 +99,23 @@ function GameScreen({userNumber, onGameOver}){
                             <Entypo name="minus" size={24} color="white" />
                         </PrimaryButton>
                     </View>
-                   <View style={styles.buttonContainer}>
-                       <PrimaryButton onPress={()=>nextGuessHandler('greater')}>
-                           <Entypo name="plus" size={24} color="white" />
-                       </PrimaryButton>
-                   </View>
-
+                    <NumberContainer>{userNumber}/{currentGuess}</NumberContainer>
+                    <View style={styles.buttonContainer}>
+                        <PrimaryButton onPress={()=>nextGuessHandler('greater')}>
+                            <Entypo name="plus" size={24} color="white" />
+                        </PrimaryButton>
+                    </View>
                 </View>
 
-            </Card>
+            </>
+        )
+    }
+    
+
+    return (
+        <View style={styles.screen}>
+            <Title>Opponent's Guess</Title>
+            {content}
             {/*The very nature of FlatList is to have an unlimited height. So we need to have it wrapped with some container that dictates how much space it will have available. Otherwise, the FlatList will not scroll properly in both OS.*/}
             <View style={styles.listContainer}>
                 {/*Something weird I noticed. This GameScreen page component is not the first one that appears when you open the app. I left a string text inside a View and any error was thrown. But it did when I navigated to this page. wait,whaat?. Does React Native only throws errors over the documents that are being rendered?. Terrible if the answers is yes. I need to investigate this further. */}
@@ -113,6 +145,11 @@ const styles = StyleSheet.create({
     },
     buttonsContainer : {
         flexDirection : 'row'
+    },
+    buttonContainerWide  : {
+      flexDirection:'row',
+        alignItems: 'center'
+
     },
     buttonContainer : {
         flex: 1 //According to what I've seen, the child of buttonContainer(in our case is PrimaryButton,  that doesn't have any width applied), will stretch to fill up buttonContainer. That's appear to be the normal behaviour. Which is great!.
