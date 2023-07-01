@@ -11,7 +11,7 @@ function CategoriesScreen({navigation}){
             //...For instance here we can see how to navigate to the Screen registered under the 'name' of 'MealsOverview'.
             //params: we can also send custom parameters to the route we want go to. Just add an object as second parameters with what you want to send.
             navigation.navigate('MealsOverview', {
-                categoryId: itemData.item.id //in this case the category id
+                categoryId: itemData.item.id //...in this case the category id
             });
         }
         return <CategoryGridTile title={itemData.item.title} color={itemData.item.color} onPress={pressHandler}/>

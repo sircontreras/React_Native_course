@@ -15,13 +15,34 @@ export default function App() {
       {/*Similar to React.js, there's a specific package that can help us with navigation that can be used with or without Expo. This is the @react-navigation/native package: https://reactnavigation.org/. First we run: npm install @react-navigation/native and then to use it with expo: npx expo install react-native-screens react-native-safe-area-context. In case we are using RN without expo there's another command and procedure we can follow, fortunately  the docs are clear. Then we can use the NavigationContainer wrapper above everything. This is the component that holds the state of where we are. */}
       <NavigationContainer>
           {/*Next we need to install some 'Navigator', which is the entity that executes the navigation orders and subscribe the screen to the Navigation system. Transition from screen to the other with a nice native animation by OS. To use it we need to first create the navigator. For this, outside the App component we declare what in line 7. That Stack variable now holds 2 components, the Stack.Navigator and Stack.Screen. Use them as follows:*/}
+          {/*The package also allows us to specify certain options such the colors of the header, the text colors, the content background color. We even specify in the Stack.Navigator under the screenOptions property(please check the docs. there are tremendous amount of options available. such to display or not the back arrow, etc. like Flutter does)*/}
           <Stack.Navigator
               initialRouteName='MealsCategories'
+              screenOptions={{
+                  headerStyle : {
+                      backgroundColor : '#351401',
+                  },
+                  headerTintColor : 'white',
+                  contentStyle : {
+                      backgroundColor: '#3f2f25'
+                  }
+              }}
           >
               {/*Stack.Screen allows to specify the name of the screen, through which we'll navigate to later the component it will render. Pay attention to the fact that in the 'component' property we do not put the JSX but just the reference*/}
               {/*After we've applied this set of changes. when running the app in both android and ios we see now that the background color we set in the app.json is gone and a Safe area behaviour has been applied for both systems. the content no longer overlaps the status bar. Also, an additional header with the text we put in the 'name' property is present in that header. So no need to use other external solutions for the Safe area thing. Additionally, the header also counts with a 'back arrow' in the left hand sie that appears automatically when there's a previous screen in stack. The arrow icon is the icon used in each OS.*/}
               {/*Out of the box, the top-most screen (i.e. the first child inside of <Stack.Navigator>) is used as the initial screen. Alternatively, there also is an initialRouteName prop that can be set on the navigator component*/}
-            <Stack.Screen name='MealsCategories' component={CategoriesScreen}/>
+
+              {/*In the Stack.Screen component we also have the 'options' property which do the same as the ScreenOptions explain above but only applied to a specific screen. Worth mentioning is that this ones will overwrite the ones in the Screen.Navigator. Please check the docs to learn more about each particular options available. */}
+            <Stack.Screen name='MealsCategories' component={CategoriesScreen} options={{
+                title: 'All Categories',
+                headerStyle : {
+                    backgroundColor : '#351401', //This we set the background color we used to set in the app.json file
+                },
+                headerTintColor : 'white',
+                contentStyle : {
+                    backgroundColor: '#3f2f25'
+                }
+            }}/>
             <Stack.Screen name='MealsOverview' component={MealsOverviewScreen}/>
           </Stack.Navigator>
       </NavigationContainer>
