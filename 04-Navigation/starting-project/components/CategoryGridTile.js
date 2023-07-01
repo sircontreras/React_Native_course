@@ -1,6 +1,12 @@
 import {Pressable, Text, View, StyleSheet, Platform} from "react-native";
+import {useNavigation} from "@react-navigation/native";
 
 function CategoryGridTile({title, color, onPress}){
+
+    //An alternative to navigate is using the useNavigation hook from the @react-navigation/native package. This will return us the same object we receive in the top-most level screen as parameter.
+    //const navigation = useNavigation();
+    //so of course we can do navigation.navigate('cacaScreen') as normal
+    //Good for deep nested components
 
     return (
         <View style={[styles.gridItem]}>
